@@ -3,6 +3,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
+import { saveEntry } from '@/app/actions';
 
 export default function Home() {
   // Router
@@ -25,6 +26,7 @@ export default function Home() {
 
     onSubmit: (values) => {
       console.log(values)
+      saveEntry(values)
       router.push('/success')
     }
   });
