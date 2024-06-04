@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb))
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.grid-container {
+  height: 100%;
+  width: 100%;
+}
+.ag-grid .ag-cell {
+  padding: 0.5rem;
+  font-size: 1rem;
+  color: #4b5563;
+  border-color: #e5e7eb;
+  line-height: 1.5;
+}
+.ag-grid .ag-header-cell {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #374151;
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+}

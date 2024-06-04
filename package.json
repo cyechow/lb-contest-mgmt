@@ -1,29 +1,38 @@
 {
-  "name": "lb-contest-form",
+  "name": "lb-contest",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "seed": "node -r dotenv/config ./scripts/seed.js"
+    "lint": "next lint"
   },
   "dependencies": {
+    "@ag-grid-community/client-side-row-model": "^31.3.2",
+    "@ag-grid-community/core": "^31.3.2",
+    "@nextui-org/system": "^2.2.1",
+    "@nextui-org/table": "^2.0.35",
+    "@nextui-org/theme": "^2.2.5",
     "@vercel/postgres": "^0.8.0",
-    "dotenv": "^16.4.5",
-    "dotnet": "^1.1.4",
+    "ag-grid-community": "^31.3.2",
+    "ag-grid-react": "^31.3.2",
     "formik": "^2.4.6",
+    "framer-motion": "^11.2.10",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "swr": "^2.2.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.19",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3"
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }

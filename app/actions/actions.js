@@ -2,8 +2,7 @@
 import { sql } from '@vercel/postgres';
 
 export async function saveEntry(formData) {
-	console.log('Reached save entry')
-	console.log(formData)
+	console.log('Saving entry')
 
 	let verified = false;
 	let won = false;

@@ -3,7 +3,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import { saveEntry } from '@/app/actions';
+import { saveEntry } from "@/app/actions/actions"
 
 export default function Home() {
   // Router
@@ -20,7 +20,7 @@ export default function Home() {
       name: Yup.string()
         .min(2, 'Name must be at least 2 characters long')
         .required('Name is required'),
-      ighandle: Yup.string().matches("^[a-zA-Z0-9.]+$", "Valid Instagram handle required.").max(30, "Valid Instagram handles are 30 characters or less.")
+      ighandle: Yup.string().matches(RegExp("^[a-zA-Z0-9.]+$"), "Valid Instagram handle required.").max(30, "Valid Instagram handles are 30 characters or less.")
         .required('Instagram handle is required.')
     }),
 
