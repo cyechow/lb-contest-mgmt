@@ -65,7 +65,7 @@ export default function Admin() {
 	// })
 
 	if (error) return (
-		<main className="h-screen flex items-center justify-center">
+		<main className="flex flex-row min-h-screen justify-center items-center">
 			<div className="bg-white flex rounded-lg w-3/4 h-3/4 font-sans">
 				<div className="flex-1 text-gray-700 p-16">
 					<h1 className='text-3xl mb-2'>Manage Contest Entries</h1>
@@ -75,7 +75,7 @@ export default function Admin() {
 		</main>
 	)
 	if (!data) return (
-		<main className="h-screen flex items-center justify-center">
+		<main className="flex flex-row min-h-screen justify-center items-center">
 			<div className="bg-white flex rounded-lg w-3/4 h-3/4 font-sans">
 				<div className="flex-1 text-gray-700 p-16">
 					<h1 className='text-3xl mb-2'>Manage Contest Entries</h1>
@@ -96,10 +96,10 @@ export default function Admin() {
 	}
 
 	return (
-		<main className="h-screen flex items-center justify-center">
-			<div className="bg-white flex rounded-lg w-3/4 h-3/4 font-sans">
-				<div className="flex-1 text-gray-700 p-16">
-					<h1 className='text-3xl mb-2'>Manage Contest Entries</h1>
+		<main className="bg-white font-sans items-center justify-center">
+			<div>
+				<div className=" text-gray-700 p-10">
+					<h1 className='text-3xl mb-2 text-center'>Manage Contest Entries</h1>
 					<p>{winner != null ? "Winner selected: " + winner : ""}</p>
 					<button
 						type="button"
@@ -108,7 +108,7 @@ export default function Admin() {
 					>
 						Randomly select next winner!
 					</button>
-					<div className="mt-4 h-3/4">
+					<div className="mt-4 h-screen">
 						<div className='ag-theme-material grid-container'>
 							<AgGridReact
 								className='ag-grid'
@@ -121,11 +121,11 @@ export default function Admin() {
 									 }
 								}
 								pagination={true}
-								paginationPageSize={20}
+								paginationPageSize={10}
 								onCellValueChanged={event => onChangeHandler(event)}
 								gridOptions={{
 									autoSizeStrategy: {
-										type: 'fitGridWidth'
+										type: "fitCellContents"
 									}
 								}}
 							/>
