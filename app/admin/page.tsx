@@ -7,8 +7,8 @@ import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme appli
 import { ColDef, GridApi, ModuleRegistry, RefreshCellsParams } from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 
-import { useState } from 'react';
-import useSWR from 'swr'
+import { useEffect, useState } from 'react';
+import useSWR, { useSWRConfig } from 'swr'
 import { CellValueChangedEvent } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([ ClientSideRowModelModule ]);
@@ -50,8 +50,19 @@ const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.js
 
 export default function Admin() {
 	const {data, error} = useSWR('/api/data', fetcher)
-
+	// const [data, setData] = useState(null)
+	// const [loading, setLoading] = useState(true)
 	const [winner, setWinner] = useState(null)
+
+	// useEffect(() => {
+	// 	fetch('/api/data')
+	// 		.then(res => res.json())
+	// 		.then(data => {
+	// 				setData(data)
+	// 				setLoading(false)
+	// 			}
+	// 		)
+	// })
 
 	if (error) return (
 		<main className="h-screen flex items-center justify-center">
