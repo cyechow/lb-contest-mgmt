@@ -9,8 +9,7 @@ import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-mod
 
 import { useState } from 'react';
 import useSWR from 'swr'
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
+import { CellValueChangedEvent } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([ ClientSideRowModelModule ]);
 let gridApi: GridApi;
@@ -23,12 +22,12 @@ function isSuppressFlashSelected() {
   return (document.querySelector("#suppressFlash") as HTMLInputElement).checked;
 }
 
-const onChangeHandler = (event) => {
+const onChangeHandler = (event: CellValueChangedEvent<any, any>) => {
 	console.log(event.data)
 	console.log(`New value: ${event.value}`)
 }
 
-function selectRandomWinner(data) {
+function selectRandomWinner(data: { rows: any[]; columns: any[] }) {
 	console.log(data)
 	let validEntries = data.rows.filter(item => {
 		return !item.Won;
@@ -47,21 +46,31 @@ function selectRandomWinner(data) {
 	return winner.Name;
 }
 
+const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.json());
+
 export default function Admin() {
 	const {data, error} = useSWR('/api/data', fetcher)
 
 	const [winner, setWinner] = useState(null)
 
 	if (error) return (
-		<main>
-			<h1 className='text-3xl'>Admin Portal</h1>
-			<div>Failed to load data...</div>
+		<main className="h-screen flex items-center justify-center">
+			<div className="bg-white flex rounded-lg w-3/4 h-3/4 font-sans">
+				<div className="flex-1 text-gray-700 p-16">
+					<h1 className='text-3xl mb-2'>Manage Contest Entries</h1>
+					<div className="mt-4 h-3/4">Failed to load data...</div>
+				</div>
+			</div>
 		</main>
 	)
 	if (!data) return (
-		<main>
-			<h1 className='text-3xl'>Admin Portal</h1>
-			<div>Loading...</div>
+		<main className="h-screen flex items-center justify-center">
+			<div className="bg-white flex rounded-lg w-3/4 h-3/4 font-sans">
+				<div className="flex-1 text-gray-700 p-16">
+					<h1 className='text-3xl mb-2'>Manage Contest Entries</h1>
+					<div className="mt-4 h-3/4">Loading...</div>
+				</div>
+			</div>
 		</main>
 	)
 
