@@ -4,44 +4,30 @@ import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import "ag-grid-community/styles/ag-theme-material.css"; // Optional Theme applied to the grid
-import { ColDef, GridApi, ModuleRegistry, RefreshCellsParams } from "@ag-grid-community/core";
+import { ModuleRegistry } from "@ag-grid-community/core";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 
-import { useEffect, useState } from 'react';
-import useSWR, { useSWRConfig } from 'swr'
+import { useState } from 'react';
+import useSWR from 'swr'
 import { CellValueChangedEvent } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([ ClientSideRowModelModule ]);
-let gridApi: GridApi;
-
-function isForceRefreshSelected() {
-  return (document.querySelector("#forceRefresh") as HTMLInputElement).checked;
-}
-
-function isSuppressFlashSelected() {
-  return (document.querySelector("#suppressFlash") as HTMLInputElement).checked;
-}
 
 const onChangeHandler = (event: CellValueChangedEvent<any, any>) => {
-	console.log(event.data)
-	console.log(`New value: ${event.value}`)
 }
 
 function selectRandomWinner(data: { rows: any[]; columns: any[] }) {
 	console.log(data)
 	let validEntries = data.rows.filter(item => {
-		return !item.Won;
+		return !item['Already Won'];
 	})
 	let count = validEntries.length;
+	if (count == 0) return "No one to choose from!";
 
 	let idxWinner = Math.floor(Math.random() * count);
 
 	let winner = validEntries[idxWinner]
-	winner.Won = true
-
-	console.log("Selected winner: " + winner.Name)
-	console.log(winner)
-	console.log(data)
+	winner['Already Won'] = true
 
 	return winner.Name;
 }
@@ -50,19 +36,7 @@ const fetcher = (url: string | URL | Request) => fetch(url).then((res) => res.js
 
 export default function Admin() {
 	const {data, error} = useSWR('/api/data', fetcher)
-	// const [data, setData] = useState(null)
-	// const [loading, setLoading] = useState(true)
 	const [winner, setWinner] = useState(null)
-
-	// useEffect(() => {
-	// 	fetch('/api/data')
-	// 		.then(res => res.json())
-	// 		.then(data => {
-	// 				setData(data)
-	// 				setLoading(false)
-	// 			}
-	// 		)
-	// })
 
 	if (error) return (
 		<main className="flex flex-row min-h-screen justify-center items-center">
@@ -91,7 +65,6 @@ export default function Admin() {
 		if (results) {
 			console.log("Winner: " + results)
 			setWinner(results)
-			gridApi.refreshCells()
 		}
 	}
 
@@ -121,7 +94,7 @@ export default function Admin() {
 									 }
 								}
 								pagination={true}
-								paginationPageSize={10}
+								paginationPageSize={20}
 								onCellValueChanged={event => onChangeHandler(event)}
 								gridOptions={{
 									autoSizeStrategy: {

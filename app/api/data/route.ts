@@ -24,3 +24,24 @@ export async function GET(request: Request) {
 		return Response.error();
 	}
 }
+
+export async function PUT(request: Request) {
+	try {
+		revalidatePath(request.url)
+		console.log("Updating data")
+		const data = await sql<Entry>`SELECT name "Name", ighandle "Instagram Handle", verified "Verified", won "Already Won" FROM entries WHERE contest_date = '2024-06-03'`;
+
+		var colnames = data.fields.map(f => {
+			return {
+				field: f.name
+			}
+		});
+		return Response.json({
+			rows: data.rows,
+			columns: colnames
+		});
+	} catch (error) {
+		console.error('Database Error:', error);
+		return Response.error();
+	}
+}
